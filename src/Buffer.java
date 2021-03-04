@@ -1,19 +1,21 @@
 import java.util.ArrayList;
 
 public class Buffer {
-	private int id;
+	public int id;
 	public boolean buffer1Full;
 	public boolean buffer2Full;
 	public Enum componentType;
 	
 	
 	public Buffer(int id, Enum componentType) {
+		buffer1Full = false;
+		buffer2Full = false;
 		this.id = id;
 		this.componentType = componentType;
 	}
 	
 	public boolean isBufferFull() {
-		return buffer1Full && buffer1Full;
+		return buffer1Full && buffer2Full;
 	}
 	
 	public int bufferSize() {
