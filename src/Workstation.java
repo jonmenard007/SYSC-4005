@@ -1,16 +1,43 @@
 import java.util.ArrayList;
+
+
+/**
+ * The Class Workstation.
+ */
 public class Workstation extends SimulationObject{
 	
-	public static enum states {BLOCKED,WORKING,DONE};
+	/**
+	 * The Enum states.
+	 */
+	public static enum states {/** The blocked. */
+BLOCKED,/** The working. */
+WORKING,/** The done. */
+DONE};
+	
+	/** The id. */
 	public int id;
+	
+	/** The state. */
 	public Enum state;
+	
+	/** The buffers. */
 	public ArrayList<Buffer> buffers;
+	
+	/** The has C 1. */
 	public boolean hasC1;
+	
+	/** The working time remaning. */
 	public float workingTimeRemaning;
 
 
-	public Workstation (int id, String[] fileNames){
-		super(fileNames);
+	/**
+	 * Instantiates a new workstation.
+	 *
+	 * @param id the id
+	 * @param fileName the file name
+	 */
+	public Workstation (int id, String fileName){
+		super(fileName);
 		this.id = id;
 		this.buffers = new ArrayList<Buffer>();
 		this.workingTimeRemaning = 0;
@@ -18,6 +45,11 @@ public class Workstation extends SimulationObject{
 		hasC1 = false;
 	}
 	
+	/**
+	 * Gets a component from a buffer.
+	 *
+	 * @return the component
+	 */
 	public void getComponent() {
 		for(int i = 0; i < buffers.size(); i++) {
 			Buffer buffer = buffers.get(i);
@@ -32,6 +64,9 @@ public class Workstation extends SimulationObject{
 		makeComponent();
 	}
 	
+	/**
+	 * Process next event.
+	 */
 	public void processNextEvent() {
 		if(state == states.BLOCKED) {
 			getComponent();
@@ -46,21 +81,22 @@ public class Workstation extends SimulationObject{
 		
 	}
 	
+	/**
+	 * Adds a buffer to the list of buffers.
+	 *
+	 * @param buffer the buffer
+	 */
 	public void addBuffer(Buffer buffer) {
 		this.buffers.add(buffer);
 	}
 	
+	/**
+	 * if it has the required component it makes the next object.
+	 */
 	public void makeComponent() {
 		if(hasC1) {
 			hasC1 = false;
-			int index;
-			index = super.valueIndexs.get(0);
-			if(index >= super.fileValues.get(0).size()) {
-				state = states.DONE;
-				return;
-			}
-			workingTimeRemaning = super.fileValues.get(0).get(index);
-			valueIndexs.set(0, (index + 1));
+			workingTimeRemaning = super.getRandomNumber();
 			state = states.WORKING;
 		}else { 
 			state = states.BLOCKED;

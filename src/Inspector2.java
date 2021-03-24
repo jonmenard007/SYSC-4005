@@ -1,38 +1,61 @@
+import java.math.BigInteger;
+import java.util.Random;
 
+
+/**
+ * The Class Inspector2.
+ */
 public class Inspector2 extends Inspector {
 	
-	public Inspector2( int id, String[] fileNames) {
-		super(id, fileNames);
+	/** The random number 2. */
+	public Random randomNumber2;
+	
+	/** The seed 2. */
+	public BigInteger seed2;
+	
+	
+	/**
+	 * Instantiates a new inspector 2.
+	 *
+	 * @param id the id
+	 * @param fileName the file name
+	 */
+	public Inspector2( int id, String fileName) {
+		super(id, fileName);
+		
+		Random random = new Random();
+		seed2 = new BigInteger(48, random);
+	    while(seed2.equals(BigInteger.ZERO)) {
+	    	seed2 = new BigInteger(48, random); 
+	    }
+		this.randomNumber2 = new Random(seed2.longValue());
+		getComponent();
 	}
 	
+	/**
+	 * Gets the next component, and how long it will take to inspect it.
+	 *
+	 * @return the component
+	 */
 	@Override
 	public void getComponent() {
-		double componentRV = Math.random();
+		double componentRV = this.randomNumber2.nextDouble();
 		int index;
 		if(componentRV < 0.50) {
 			currentComponent = components.C2;
-			index = valueIndexs.get(0);
-			if(index >= super.fileValues.get(0).size()) {
-				state = states.DONE;
-				return;
-			}
-			inspectionTimeRemaining = fileValues.get(0).get(index);
-			valueIndexs.set(0, (index + 1));
+			inspectionTimeRemaining  = super.getRandomNumber();
 		}else {
 			currentComponent = components.C3;
-			index = valueIndexs.get(1);
+			inspectionTimeRemaining  = super.getRandomNumber();
 			
-			if(index >= super.fileValues.get(1).size()) {
-				state = states.DONE;
-				return;
-			}
-			inspectionTimeRemaining = fileValues.get(1).get(index);
-			valueIndexs.set(1, (index + 1));
 		}
 		state = states.INSCPECTING;
 		
 	}
 
+	/**
+	 * Process next event.
+	 */
 	@Override
 	public void processNextEvent() {
 		if(state == states.BLOCKED) {

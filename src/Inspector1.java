@@ -1,24 +1,36 @@
+
+/**
+ * The Class Inspector1.
+ */
 public class Inspector1 extends Inspector{
 
 	
-	public Inspector1( int id, String[] fileNames) {
-		super(id, fileNames);
+	/**
+	 * Instantiates a new inspector 1.
+	 *
+	 * @param id the id
+	 * @param fileName the file name
+	 */
+	public Inspector1( int id, String fileName) {
+		super(id, fileName);
+		getComponent();
 	}
 	
+	/**
+	 * Gets the component and how long it will take to inspect it.
+	 *
+	 * @return the component
+	 */
 	@Override
 	public void getComponent() {
-		int index;
 		currentComponent = components.C1;
-		index = super.valueIndexs.get(0);
-		if(index >= super.fileValues.get(0).size()) {
-			state = states.DONE;
-			return;
-		}
-		inspectionTimeRemaining = super.fileValues.get(0).get(index);
-		valueIndexs.set(0, (index + 1));
+		inspectionTimeRemaining  = super.getRandomNumber();
 		state = states.INSCPECTING;
 	}
 
+	/**
+	 * Process next event.
+	 */
 	@Override
 	public void processNextEvent() {
 		if(state == states.BLOCKED) {

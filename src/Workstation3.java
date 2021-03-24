@@ -1,15 +1,31 @@
+
+/**
+ * The Class Workstation3.
+ */
 public class Workstation3 extends Workstation{
 
 	
+	/** The has C 3. */
 	public boolean hasC3;
 	
-	public Workstation3(int id, String[] fileNames) {
-		super(id, fileNames);
+	/**
+	 * Instantiates a new workstation 3.
+	 *
+	 * @param id the id
+	 * @param fileName the file name
+	 */
+	public Workstation3(int id, String fileName) {
+		super(id, fileName);
 		hasC3 = false;
 		
 	}
 	
 	
+	/**
+	 * Gets the required components from the buffers.
+	 *
+	 * @return the component
+	 */
 	@Override
 	public void getComponent() {
 		for(int i = 0; i < buffers.size(); i++) {
@@ -30,19 +46,15 @@ public class Workstation3 extends Workstation{
 		makeComponent();
 	}
 	
+	/**
+	 * If it has the required components it makes them.
+	 */
 	@Override
 	public void makeComponent() {
 		if(hasC1 && hasC3) {
 			hasC1 = false;
 			hasC3 = false;
-			int index;
-			index = super.valueIndexs.get(0);
-			if(index >= super.fileValues.get(0).size()) {
-				state = states.DONE;
-				return;
-			}
-			workingTimeRemaning = super.fileValues.get(0).get(index);
-			valueIndexs.set(0, (index + 1));
+			workingTimeRemaning = super.getRandomNumber();
 			state = states.WORKING;
 		}else { 
 			state = states.BLOCKED;

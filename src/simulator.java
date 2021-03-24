@@ -2,12 +2,21 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
+
 enum components {C1,C2,C3};
 
+/**
+ * The Class simulator.
+ */
 public class simulator {
 	
 
 	
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 */
 	public static void main(String[] args) {
 
 		Enum Inspector1LastState;
@@ -33,14 +42,14 @@ public class simulator {
 		
         ArrayList<Inspector> inspectors = new ArrayList<Inspector>();
         
-        Inspector1 inspector1 = new Inspector1(1, new String[] {"resources/simulationTiming/servinsp1.dat"});
-        Inspector2 inspector2 = new Inspector2(2,new String[] {"resources/simulationTiming/servinsp22.dat","resources/simulationTiming/servinsp23.dat"});
+        Inspector1 inspector1 = new Inspector1(1, "Inspector1");
+        Inspector2 inspector2 = new Inspector2(2,"Inspector2");
         inspectors.add(inspector1);
         inspectors.add(inspector2);
 
-        Workstation workstation1 = new Workstation(1,new String[] {"resources/simulationTiming/ws1.dat"});
-        Workstation2 workstation2 = new Workstation2(2,new String[] {"resources/simulationTiming/ws2.dat"});
-        Workstation3 workstation3 = new Workstation3(3,new String[] {"resources/simulationTiming/ws3.dat"});
+        Workstation workstation1 = new Workstation(1,"Workstation1");
+        Workstation2 workstation2 = new Workstation2(2,"Workstation2");
+        Workstation3 workstation3 = new Workstation3(3,"Workstation3");
 
         Buffer buffer1 = new Buffer(1, components.C1);
         Buffer buffer2 = new Buffer(2, components.C1);
@@ -89,7 +98,7 @@ public class simulator {
 			writer.write("Current Time,Inspector 1,Inspector 2,Buffer 1,Buffer 2,Buffer 3,Buffer 4,Buffer 5,Workstation 1,W1-C1,Workstation 2,W2-C1,W2-C2,Workstation 3,W3-C1,W3-C3 \n");
 			writer.write(0 +","+Inspector1LastState+","+Inspector2LastState+","+buffer1LastSize+","+buffer2LastSize+","+buffer3LastSize+","+buffer4LastSize+","+buffer5LastSize+","+Workstation1LastState+","+Workstation1LastC1+","+Workstation2LastState+","+Workstation2LastC1+","+Workstation2LastC2+","+Workstation3LastState+","+Workstation3LastC1+","+Workstation3LastC3 + "\n");
 			boolean write = false;
-			for(int i = 0; i < 10000000; i++) {
+			for(int i = 0; i < 100000; i++) {
 				inspector1.processNextEvent();
 	        	inspector2.processNextEvent();
 	        	workstation1.processNextEvent();
@@ -142,7 +151,11 @@ public class simulator {
 					
 	        	
 			}
-			
+			inspector1.close();
+        	inspector2.close();
+        	workstation1.close();
+        	workstation2.close();
+        	workstation3.close();
 			writer.close();	
 		} catch (IOException e) {
 			e.printStackTrace();
