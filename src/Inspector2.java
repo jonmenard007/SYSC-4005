@@ -1,3 +1,5 @@
+import java.io.FileWriter;
+import java.io.IOException;
 import java.math.BigInteger;
 import java.util.Random;
 
@@ -12,6 +14,7 @@ public class Inspector2 extends Inspector {
 	
 	/** The seed 2. */
 	public BigInteger seed2;
+	public FileWriter writer;
 	
 	
 	/**
@@ -20,8 +23,8 @@ public class Inspector2 extends Inspector {
 	 * @param id the id
 	 * @param fileName the file name
 	 */
-	public Inspector2( int id, String fileName) {
-		super(id, fileName);
+	public Inspector2( int id, String fileName, float rMean) {
+		super(id, fileName,  rMean);
 		
 		Random random = new Random();
 		seed2 = new BigInteger(48, random);
@@ -29,6 +32,12 @@ public class Inspector2 extends Inspector {
 	    	seed2 = new BigInteger(48, random); 
 	    }
 		this.randomNumber2 = new Random(seed2.longValue());
+		try {
+			writer = new FileWriter("resources/results/inspector2C3.csv");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		getComponent();
 	}
 	
@@ -39,19 +48,54 @@ public class Inspector2 extends Inspector {
 	 */
 	@Override
 	public void getComponent() {
-		double componentRV = this.randomNumber2.nextDouble();
+		double componentRV = Math.random();
+		//System.out.println("This is the r Mean" + componentRV);
 		int index;
 		if(componentRV < 0.50) {
 			currentComponent = components.C2;
-			inspectionTimeRemaining  = super.getRandomNumber();
+			inspectionTimeRemaining  = getRandomNumber();
+			System.out.println("This is the r Mean" + lambda);
+			System.out.println("This is the  Mean:   " + inspectionTimeRemaining);
 		}else {
 			currentComponent = components.C3;
-			inspectionTimeRemaining  = super.getRandomNumber();
+			inspectionTimeRemaining  = getRandomNumber2();
 			
 		}
 		state = states.INSCPECTING;
 		
 	}
+	
+	/**
+	 * Close the file.
+	 */
+	@Override
+	public void close() {
+		super.close();
+		try {
+			writer.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
+	}
+	
+	public float getRandomNumber2() {
+		float f = this.randomNumber2.nextFloat() ;
+		f = (float) ((-1 / 0.048466621) * (Math.log(f)));
+		
+		try {
+			
+		//	System.out.println(f);
+	    	writer.write(Float.toString(f) + ",\n");
+	    
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.out.println("Problem Writing to results.csv");
+		}
+		
+		return f * 100;// times 100 to make each iteration 1 100th of a second ;
+	}
+	
 
 	/**
 	 * Process next event.

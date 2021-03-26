@@ -37,8 +37,8 @@ public float inspectionTimeRemaining;
  * @param id the id
  * @param fileName; the filename of the file to save generated inputs to
  */
-Inspector (int id, String fileName){
-	super(fileName);
+Inspector (int id, String fileName, float rMean){
+	super(fileName, rMean);
 	this.id = id;
 	this.buffers = new ArrayList<Buffer>();
 	this.inspectionTimeRemaining = 0;
@@ -91,7 +91,7 @@ public void giveBufferComponent() {
 	}
 	if(bufferToAddTo != null) {
 		if(bufferToAddTo.addComponent(currentComponent)) {
-			System.out.println("Inspector " + id + " gave Buffer " + bufferToAddTo.id + " component" + currentComponent);
+		//	System.out.println("Inspector " + id + " gave Buffer " + bufferToAddTo.id + " component" + currentComponent);
 			getComponent();
 			state = states.INSCPECTING;
 			return;

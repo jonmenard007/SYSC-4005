@@ -31,6 +31,8 @@ public class SimulationObject {
 	/** The seed. */
 	public BigInteger seed;
 	
+	public float lambda;
+	
 	/** The writer. */
 	FileWriter writer;
 	
@@ -40,7 +42,8 @@ public class SimulationObject {
 	 *
 	 * @param  the filename of the file to save generated inputs to
 	 */
-	SimulationObject(String filename) {
+	SimulationObject(String filename, float randMean) {
+		this.lambda = randMean;
 		this.filename = filename;
 		Random random = new Random();
 		seed = new BigInteger(48, random);
@@ -80,20 +83,19 @@ public class SimulationObject {
 	 * @return the random number
 	 */
 	public float getRandomNumber() {
-		float f = this.randomNumber.nextFloat() ;
-		f = (float) ((-1 / 0.084483038) * (Math.log(f)));
+		float randomTime = this.randomNumber.nextFloat() ;
+		randomTime = (float) ((-1 / lambda) * (Math.log(randomTime)));
 		
 		try {
 			
-			System.out.println(f);
-	    	writer.write(Float.toString(f) + ",\n");
+	    	writer.write(Float.toString(randomTime) + ",\n");
 	    
 		} catch (IOException e) {
 			e.printStackTrace();
 			System.out.println("Problem Writing to results.csv");
 		}
 		
-		return f;
+		return randomTime * 100;// times 100 to make each iteration 1 100th of a second ;
 	}
 	
 

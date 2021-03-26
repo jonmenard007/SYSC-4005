@@ -1,6 +1,11 @@
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+
+
 
 
 enum components {C1,C2,C3};
@@ -12,12 +17,15 @@ public class simulator {
 	
 
 	
+	
+	
 	/**
 	 * The main method.
 	 *
 	 * @param args the arguments
+	 * @throws IOException 
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 
 		Enum Inspector1LastState;
 		Enum Inspector2LastState;
@@ -42,14 +50,14 @@ public class simulator {
 		
         ArrayList<Inspector> inspectors = new ArrayList<Inspector>();
         
-        Inspector1 inspector1 = new Inspector1(1, "Inspector1");
-        Inspector2 inspector2 = new Inspector2(2,"Inspector2");
+        Inspector1 inspector1 = new Inspector1(1, "Inspector1",0.096544573f);
+        Inspector2 inspector2 = new Inspector2(2,"Inspector2C2",0.06436289f);
         inspectors.add(inspector1);
         inspectors.add(inspector2);
 
-        Workstation workstation1 = new Workstation(1,"Workstation1");
-        Workstation2 workstation2 = new Workstation2(2,"Workstation2");
-        Workstation3 workstation3 = new Workstation3(3,"Workstation3");
+        Workstation workstation1 = new Workstation(1,"Workstation1",0.217182777f);
+        Workstation2 workstation2 = new Workstation2(2,"Workstation2",0.090150136f);
+        Workstation3 workstation3 = new Workstation3(3,"Workstation3",0.113693469f);
 
         Buffer buffer1 = new Buffer(1, components.C1);
         Buffer buffer2 = new Buffer(2, components.C1);
@@ -98,7 +106,8 @@ public class simulator {
 			writer.write("Current Time,Inspector 1,Inspector 2,Buffer 1,Buffer 2,Buffer 3,Buffer 4,Buffer 5,Workstation 1,W1-C1,Workstation 2,W2-C1,W2-C2,Workstation 3,W3-C1,W3-C3 \n");
 			writer.write(0 +","+Inspector1LastState+","+Inspector2LastState+","+buffer1LastSize+","+buffer2LastSize+","+buffer3LastSize+","+buffer4LastSize+","+buffer5LastSize+","+Workstation1LastState+","+Workstation1LastC1+","+Workstation2LastState+","+Workstation2LastC1+","+Workstation2LastC2+","+Workstation3LastState+","+Workstation3LastC1+","+Workstation3LastC3 + "\n");
 			boolean write = false;
-			for(int i = 0; i < 100000; i++) {
+			//7200 is equal to 2 hours 
+			for(int i = 0; i < (7200 * 100); i++) {
 				inspector1.processNextEvent();
 	        	inspector2.processNextEvent();
 	        	workstation1.processNextEvent();
@@ -162,8 +171,54 @@ public class simulator {
 			System.out.println("Problem Writing to results.csv");
 		}
         
+        final Charset CS = Charset.defaultCharset(); // e.g. UTF-8
+        ArrayList<String> lines1 = (ArrayList<String>) Files.readAllLines(Paths.get("resources/results/Inspector1.csv"), CS),
+                     lines2 = (ArrayList<String>) Files.readAllLines(Paths.get("resources/results/Inspector2C2.csv"), CS),
+                     lines3 = (ArrayList<String>) Files.readAllLines(Paths.get("resources/results/Inspector2C3.csv"), CS),
+                     lines4 = (ArrayList<String>) Files.readAllLines(Paths.get("resources/results/Workstation1.csv"), CS),
+                     lines5 = (ArrayList<String>) Files.readAllLines(Paths.get("resources/results/Workstation2.csv"), CS),
+                     lines6 = (ArrayList<String>) Files.readAllLines(Paths.get("resources/results/Workstation3.csv"), CS);
+        // MERGE until end of either list, then APPEND until end of lines2
+        int maxSize = lines1.size();
+        if(maxSize < lines2.size()) maxSize = lines2.size();
+        if(maxSize < lines3.size()) maxSize = lines3.size();
+        if(maxSize < lines4.size()) maxSize = lines4.size();
+        if(maxSize < lines5.size()) maxSize = lines5.size();
+        if(maxSize < lines6.size()) maxSize = lines6.size();
         
-
-       
+        
+        FileWriter writer = new FileWriter("resources/results/data.csv");
+        writer.write("Inspector 1, Inspector 2C2, Inspector 2C3, Workstation 1,Workstation 2,Workstation 3 \n");
+		
+        for (int i = 0; i < maxSize; i++) {
+             	String l1 = ",", l2 = ",",l3 = ",",l4 = ",",l5 = ",",l6 = "";
+             	
+             	if(lines1.size() > i) {
+             		l1 = lines1.get(i);
+             	}
+             	if(lines2.size() > i) {
+             		l2 = lines2.get(i);
+             	}
+             	if(lines3.size() > i) {
+             		l3 = lines3.get(i);
+             	}
+             	if(lines4.size() > i) {
+             		l4 = lines4.get(i);
+             	}
+             	if(lines5.size() > i) {
+             		l5 = lines5.get(i);
+             	}
+             	if(lines6.size() > i) {
+             		l6 = lines6.get(i);
+             	}
+             	System.out.println(l2);
+                writer.write(l1 +  l2 +  l3 +  l4 +  l5 + l6 + "\n");
+            
+		}
+        writer.close();
+		
+        // WRITE lines1 (the merged lines) to some file3
+        //Files.write(Paths.get("resources/results/data.csv"), lines1, CS, CREATE, WRITE, TRUNCATE_EXISTING);
+    
     }
 }

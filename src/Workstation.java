@@ -36,8 +36,8 @@ DONE};
 	 * @param id the id
 	 * @param fileName the file name
 	 */
-	public Workstation (int id, String fileName){
-		super(fileName);
+	public Workstation (int id, String fileName, float rMean){
+		super(fileName,  rMean);
 		this.id = id;
 		this.buffers = new ArrayList<Buffer>();
 		this.workingTimeRemaning = 0;
@@ -55,7 +55,7 @@ DONE};
 			Buffer buffer = buffers.get(i);
 			if(buffer.isComponentAvailable(components.C1) && !hasC1){
 				if(buffer.getComponent() == components.C1) {
-					System.out.println("WorkStation " + id + " got from Buffer " + buffer.id + " component C1");
+					//System.out.println("WorkStation " + id + " got from Buffer " + buffer.id + " component C1");
 					hasC1 = true;
 					break;
 				}

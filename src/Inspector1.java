@@ -11,8 +11,8 @@ public class Inspector1 extends Inspector{
 	 * @param id the id
 	 * @param fileName the file name
 	 */
-	public Inspector1( int id, String fileName) {
-		super(id, fileName);
+	public Inspector1( int id, String fileName, float rMean) {
+		super(id, fileName,  rMean);
 		getComponent();
 	}
 	

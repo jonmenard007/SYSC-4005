@@ -13,8 +13,8 @@ public class Workstation2 extends Workstation {
 	 * @param id the id
 	 * @param fileName the file name
 	 */
-	public Workstation2(int id, String fileName) {
-		super(id, fileName);
+	public Workstation2(int id, String fileName , float rMean) {
+		super(id, fileName , rMean);
 		hasC1 = false;
 		
 	}
@@ -30,12 +30,12 @@ public class Workstation2 extends Workstation {
 			Buffer buffer = buffers.get(i);
 			if(buffer.isComponentAvailable(components.C1) && !hasC1){
 				if(buffer.getComponent() == components.C1) {
-					System.out.println("WorkStation " + id + " got from Buffer " + buffer.id + " component C1");
+				//	System.out.println("WorkStation " + id + " got from Buffer " + buffer.id + " component C1");
 					hasC1 = true;
 				}
 			}else if(buffer.isComponentAvailable(components.C2) && !hasC2){
 				if(buffer.getComponent() == components.C2) {
-					System.out.println("WorkStation " + id + " got from Buffer " + buffer.id + " component C2");
+				//	System.out.println("WorkStation " + id + " got from Buffer " + buffer.id + " component C2");
 					hasC2 = true;
 				}
 			}
