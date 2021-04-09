@@ -52,6 +52,7 @@ public class Workstation2 extends Workstation {
 		if(hasC1 && hasC2) {
 			hasC1 = false;
 			hasC2 = false;
+			super.count++;
 			workingTimeRemaning = super.getRandomNumber();
 			state = states.WORKING;
 		}else { 

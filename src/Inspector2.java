@@ -61,7 +61,7 @@ public class Inspector2 extends Inspector {
 			inspectionTimeRemaining  = getRandomNumber2();
 			
 		}
-		state = states.INSCPECTING;
+		state = states.INSPECTING;
 		
 	}
 	
@@ -104,7 +104,7 @@ public class Inspector2 extends Inspector {
 	public void processNextEvent() {
 		if(state == states.BLOCKED) {
 			giveBufferComponent();			
-		}else if (state == states.INSCPECTING) {
+		}else if (state == states.INSPECTING) {
 			inspectionTimeRemaining -= 1;
 			if(inspectionTimeRemaining <= 0) {
 				giveBufferComponent();

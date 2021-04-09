@@ -12,7 +12,7 @@ public abstract class Inspector extends SimulationObject {
  */
 public static enum states {/** The blocked. */
 BLOCKED,/** The inscpecting. */
-INSCPECTING,/** The done. */
+INSPECTING,/** The done. */
 DONE};
 
 /** The id. */
@@ -93,7 +93,7 @@ public void giveBufferComponent() {
 		if(bufferToAddTo.addComponent(currentComponent)) {
 		//	System.out.println("Inspector " + id + " gave Buffer " + bufferToAddTo.id + " component" + currentComponent);
 			getComponent();
-			state = states.INSCPECTING;
+			state = states.INSPECTING;
 			return;
 		}
 	}

@@ -50,15 +50,19 @@ public class simulator {
 		
         ArrayList<Inspector> inspectors = new ArrayList<Inspector>();
         
-        Inspector1 inspector1 = new Inspector1(1, "Inspector1",0.096544573f);
-        Inspector2 inspector2 = new Inspector2(2,"Inspector2C2",0.06436289f);
-        inspectors.add(inspector1);
-        inspectors.add(inspector2);
+       
+        
 
         Workstation workstation1 = new Workstation(1,"Workstation1",0.217182777f);
         Workstation2 workstation2 = new Workstation2(2,"Workstation2",0.090150136f);
         Workstation3 workstation3 = new Workstation3(3,"Workstation3",0.113693469f);
 
+        Inspector2 inspector2 = new Inspector2(2,"Inspector2C2",0.06436289f);
+        Inspector1 inspector1 = new Inspector1(1, "Inspector1",0.096544573f, workstation2, workstation3, inspector2);
+        inspectors.add(inspector1);
+        inspectors.add(inspector2);
+        
+        
         Buffer buffer1 = new Buffer(1, components.C1);
         Buffer buffer2 = new Buffer(2, components.C1);
         Buffer buffer3 = new Buffer(3, components.C2);
@@ -103,7 +107,7 @@ public class simulator {
         
         try {
 			FileWriter writer = new FileWriter("resources/results/results.csv");
-			writer.write("Current Time,Inspector 1,Inspector 2,Buffer 1,Buffer 2,Buffer 3,Buffer 4,Buffer 5,Workstation 1,W1-C1,Workstation 2,W2-C1,W2-C2,Workstation 3,W3-C1,W3-C3 \n");
+			writer.write("Current Time,Inspector 1,Inspector 2,Buffer 1,Buffer 2,Buffer 3,Buffer 4,Buffer 5,Workstation 1,W1-C1,Workstation 2,W2-C1,W2-C2,Workstation 3,W3-C1,W3-C3," + workstation1.count + "," + workstation2.count + "," + workstation3.count + "\n");
 			writer.write(0 +","+Inspector1LastState+","+Inspector2LastState+","+buffer1LastSize+","+buffer2LastSize+","+buffer3LastSize+","+buffer4LastSize+","+buffer5LastSize+","+Workstation1LastState+","+Workstation1LastC1+","+Workstation2LastState+","+Workstation2LastC1+","+Workstation2LastC2+","+Workstation3LastState+","+Workstation3LastC1+","+Workstation3LastC3 + "\n");
 			boolean write = false;
 			//7200 is equal to 2 hours 
@@ -160,6 +164,7 @@ public class simulator {
 					
 	        	
 			}
+			writer.write("Current Time,Inspector 1,Inspector 2,Buffer 1,Buffer 2,Buffer 3,Buffer 4,Buffer 5,Workstation 1,W1-C1,Workstation 2,W2-C1,W2-C2,Workstation 3,W3-C1,W3-C3," + workstation1.count + "," + workstation2.count + "," + workstation3.count + "\n");
 			inspector1.close();
         	inspector2.close();
         	workstation1.close();
