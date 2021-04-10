@@ -55,8 +55,6 @@ public class Inspector2 extends Inspector {
 		if(componentRV < 0.50) {
 			currentComponent = components.C2;
 			inspectionTimeRemaining  = getRandomNumber();
-			System.out.println("This is the r Mean" + lambda);
-			System.out.println("This is the  Mean:   " + inspectionTimeRemaining);
 		}else {
 			currentComponent = components.C3;
 			inspectionTimeRemaining  = getRandomNumber2();

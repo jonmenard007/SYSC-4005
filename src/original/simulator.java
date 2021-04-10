@@ -232,14 +232,11 @@ public class simulator {
              	if(lines6.size() > i) {
              		l6 = lines6.get(i);
              	}
-             	System.out.println(l2);
                 writer.write(l1 +  l2 +  l3 +  l4 +  l5 + l6 + "\n");
             
 		}
         writer.close();
-		
-        // WRITE lines1 (the merged lines) to some file3
-        //Files.write(Paths.get("resources/results/data.csv"), lines1, CS, CREATE, WRITE, TRUNCATE_EXISTING);
+        System.out.println("Original Simulator Done Executing");
     
     }
 }
