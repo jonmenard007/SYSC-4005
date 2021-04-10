@@ -1,7 +1,8 @@
 package alternitave;
-
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.RandomAccessFile;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -60,7 +61,7 @@ public class simulator {
         Workstation3 workstation3 = new Workstation3(3,"Workstation3",0.113693469f);
 
         Inspector2 inspector2 = new Inspector2(2,"Inspector2C2",0.06436289f);
-        Inspector1 inspector1 = new Inspector1(1, "Inspector1",0.096544573f, workstation2, workstation3, inspector2);
+        Inspector1 inspector1 = new Inspector1(1, "Inspector1",0.096544573f,workstation2, workstation3, inspector2);
         inspectors.add(inspector1);
         inspectors.add(inspector2);
         
@@ -109,7 +110,10 @@ public class simulator {
         
         try {
 			FileWriter writer = new FileWriter("resources/results/results.csv");
-			writer.write("Current Time,Inspector 1,Inspector 2,Buffer 1,Buffer 2,Buffer 3,Buffer 4,Buffer 5,Workstation 1,W1-C1,Workstation 2,W2-C1,W2-C2,Workstation 3,W3-C1,W3-C3," + workstation1.count + "," + workstation2.count + "," + workstation3.count + "\n");
+			writer.write("Current Time,Inspector 1,Inspector 2,Buffer 1,Buffer 2,Buffer 3,Buffer 4,Buffer 5,Workstation 1,W1-C1,Workstation 2,W2-C1,W2-C2,Workstation 3,W3-C1,W3-C3,,,,,," + workstation1.count + "," + workstation2.count + "," + workstation3.count + ",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,\n");
+			//writer.write("Current Time,Inspector 1,Inspector 2,Buffer 1,Buffer 2,Buffer 3,Buffer 4,Buffer 5,Workstation 1,W1-C1,Workstation 2,W2-C1,W2-C2,Workstation 3,W3-C1,W3-C3,,,,,," + workstation1.count + "," + workstation2.count + "," + workstation3.count + "\n");
+			//writer.write("Current Time,Inspector 1,Inspector 2,Buffer 1,Buffer 2,Buffer 3,Buffer 4,Buffer 5,Workstation 1,W1-C1,Workstation 2,W2-C1,W2-C2,Workstation 3,W3-C1,W3-C3,,,,,," + workstation1.count + "," + workstation2.count + "," + workstation3.count + "\n");
+			
 			writer.write(0 +","+Inspector1LastState+","+Inspector2LastState+","+buffer1LastSize+","+buffer2LastSize+","+buffer3LastSize+","+buffer4LastSize+","+buffer5LastSize+","+Workstation1LastState+","+Workstation1LastC1+","+Workstation2LastState+","+Workstation2LastC1+","+Workstation2LastC2+","+Workstation3LastState+","+Workstation3LastC1+","+Workstation3LastC3 + "\n");
 			boolean write = false;
 			//7200 is equal to 2 hours 
@@ -166,13 +170,23 @@ public class simulator {
 					
 	        	
 			}
-			writer.write("Current Time,Inspector 1,Inspector 2,Buffer 1,Buffer 2,Buffer 3,Buffer 4,Buffer 5,Workstation 1,W1-C1,Workstation 2,W2-C1,W2-C2,Workstation 3,W3-C1,W3-C3," + workstation1.count + "," + workstation2.count + "," + workstation3.count + "\n");
+			//writer.write("Current Time,Inspector 1,Inspector 2,Buffer 1,Buffer 2,Buffer 3,Buffer 4,Buffer 5,Workstation 1,W1-C1,Workstation 2,W2-C1,W2-C2,Workstation 3,W3-C1,W3-C3, \n");
+			writer.close();	
+			
+			
+			RandomAccessFile f = new RandomAccessFile(new File("resources/results/results.csv"), "rw");
+			f.seek(0); // to the beginning
+			String line = "Current Time,Inspector 1,Inspector 2,Buffer 1,Buffer 2,Buffer 3,Buffer 4,Buffer 5,Workstation 1,W1-C1,Workstation 2,W2-C1,W2-C2,Workstation 3,W3-C1,W3-C3,,,,,," + workstation1.count + "," + workstation2.count + "," + workstation3.count + "\n";
+			// workstation1.count + "," + workstation2.count + "," + workstation3.count + "\n";
+			f.write(line.getBytes());
+			f.close();
+			
 			inspector1.close();
         	inspector2.close();
         	workstation1.close();
         	workstation2.close();
         	workstation3.close();
-			writer.close();	
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 			System.out.println("Problem Writing to results.csv");
@@ -222,8 +236,7 @@ public class simulator {
             
 		}
         writer.close();
-		System.out.println("Alternative Simulator Done Executing");
-       
+        System.out.println("Alternative Simulator Done Executing");
     
     }
 }

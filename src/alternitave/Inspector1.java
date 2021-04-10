@@ -99,23 +99,13 @@ public class Inspector1 extends Inspector{
 						if(workstation1C1) {
 							addedToBuffer = checkInspector();
 						}else {
-							if(this.buffers.get(0).addComponent(this.currentComponent)) {
-								addedToBuffer = true;
-								return;
-							}
-							
+							if(this.buffers.get(0).addComponent(this.currentComponent)) {addedToBuffer = true;}
 						}
 					}else {
-						if(this.workstation3.buffers.get(0).addComponent(this.currentComponent)) {
-							addedToBuffer = true;
-							return;
-						}
+						if(this.workstation3.buffers.get(0).addComponent(this.currentComponent)) {addedToBuffer = true;}
 					}
 				}else {
-					if(this.workstation2.buffers.get(0).addComponent(this.currentComponent)) {
-						addedToBuffer = true;
-						return;
-					}
+					if(this.workstation2.buffers.get(0).addComponent(this.currentComponent)) {addedToBuffer = true;}
 				}
 			}else {
 				if(workstation2C1) {
@@ -123,19 +113,13 @@ public class Inspector1 extends Inspector{
 						if(workstation1C1) {
 							addedToBuffer = checkInspector();
 						}else {
-							if(this.buffers.get(0).addComponent(this.currentComponent)) {
-								addedToBuffer = true;
-							}
+							if(this.buffers.get(0).addComponent(this.currentComponent)) {addedToBuffer = true;}
 						}
 					}else {
-						if(this.workstation3.buffers.get(0).addComponent(this.currentComponent)) {
-							addedToBuffer = true;
-						}
+						if(this.workstation3.buffers.get(0).addComponent(this.currentComponent)) {addedToBuffer = true;}
 					}
 				}else {
-					if(this.workstation2.buffers.get(0).addComponent(this.currentComponent)) {
-						addedToBuffer = true;
-					}
+					if(this.workstation2.buffers.get(0).addComponent(this.currentComponent)) {addedToBuffer = true;}
 				}
 			}	
 		}else {
@@ -145,29 +129,21 @@ public class Inspector1 extends Inspector{
 						if(workstation1C1) {
 							addedToBuffer = checkInspector();
 						}else {
-							if(this.buffers.get(0).addComponent(this.currentComponent)) {
-								addedToBuffer = true;
-							}
+							if(this.buffers.get(0).addComponent(this.currentComponent)) {addedToBuffer = true;}
 						}
 					}else {
-						if(this.workstation2.buffers.get(0).addComponent(this.currentComponent)) {
-							addedToBuffer = true;
-						}
+						if(this.workstation2.buffers.get(0).addComponent(this.currentComponent)) { addedToBuffer = true;}
 					}
 				}else {
-					if(this.workstation3.buffers.get(0).addComponent(this.currentComponent)) {
-						addedToBuffer = true;
-					}
+					if(this.workstation3.buffers.get(0).addComponent(this.currentComponent)) { addedToBuffer = true;}
 				}
 			}else {
 				addedToBuffer = checkInspector();
 			}
 		}
-		
 		if(this.buffers.get(0).addComponent(this.currentComponent)) {
 			addedToBuffer = true;
 		}
-		
 		if(addedToBuffer) {
 			getComponent();
 			state = states.INSPECTING;
@@ -175,8 +151,5 @@ public class Inspector1 extends Inspector{
 		}else {
 			state = states.BLOCKED;
 		}
-
-	}
-	
-	
+	}	
 }
