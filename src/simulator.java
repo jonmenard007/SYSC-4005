@@ -48,6 +48,7 @@ public class simulator {
 		
 		
 		
+		
         ArrayList<Inspector> inspectors = new ArrayList<Inspector>();
         
         Inspector1 inspector1 = new Inspector1(1, "Inspector1",0.096544573f);
@@ -160,6 +161,7 @@ public class simulator {
 					
 	        	
 			}
+			writer.write(",,,,,,,,,,,,,,,,,,," + workstation1.count + "," + workstation2.count + "," + workstation3.count + "\n");
 			inspector1.close();
         	inspector2.close();
         	workstation1.close();

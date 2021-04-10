@@ -28,6 +28,8 @@ DONE};
 	
 	/** The working time remaning. */
 	public float workingTimeRemaning;
+	
+	public int count = 0;
 
 
 	/**
@@ -96,6 +98,7 @@ DONE};
 	public void makeComponent() {
 		if(hasC1) {
 			hasC1 = false;
+			count++;
 			workingTimeRemaning = super.getRandomNumber();
 			state = states.WORKING;
 		}else { 

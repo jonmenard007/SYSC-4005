@@ -17,6 +17,7 @@ public class Workstation2 extends Workstation {
 		super(id, fileName , rMean);
 		hasC1 = false;
 		
+		
 	}
 	
 	/**
@@ -52,6 +53,7 @@ public class Workstation2 extends Workstation {
 		if(hasC1 && hasC2) {
 			hasC1 = false;
 			hasC2 = false;
+			count++;
 			workingTimeRemaning = super.getRandomNumber();
 			state = states.WORKING;
 		}else { 
